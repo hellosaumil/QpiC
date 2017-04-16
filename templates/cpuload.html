@@ -1,0 +1,211 @@
+$def with (text)
+
+<!DOCTYPE html>
+<meta charset='utf-8'>
+<html>
+  <head>
+    <title>CPU Load Monitor</title>
+    <link rel='stylesheet' href='../static/style.css'>
+    <link rel="stylesheet" href="//rawgithub.com/Caged/d3-tip/master/examples/example-styles.css">
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+    <script src='http://d3js.org/d3.v3.min.js'></script>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+  </head>
+
+  <body>
+    <h1>CPU Load Monitor</h1>
+
+    <svg id='bar-graph'></svg>
+
+    <div id='stats'>
+      <h2>Current Stats</h2>
+      <ul>
+        <li>Uptime: <span id='uptime' class='stat-data'></span><br></li>
+        <li>10-min Average Load: <span id='ten-min-avg' class='stat-data'></span><br></li>
+        <li>10-min Median Load: <span id='ten-min-med' class='stat-data'></span><br></li>
+        <li>Min Load: <span id='min-load' class='stat-data'></span><br></li>
+        <li>Max Load: <span id='max-load' class='stat-data'></span><br></li>
+      </ul>
+    </div>
+
+    <div id='alerts'>
+      <h2>Alerts</h2>
+      <ul id='alert-list'></ul>
+    </div>
+
+
+        <script>
+              jQuery(document).ready(function()
+              {
+                console.log('ready!');
+
+                jQuery.ajax(
+                  {
+                    type: "POST",
+                    data: {data_tx : '2'+'^'+'username'+'~'+'file_name'+'!'+'query'},
+
+                    success: function(data)
+                    {
+                      console.log(data);
+                      handleData(data);
+                      poll();
+                    }
+                  });
+              }
+          /*
+            Schedule repeated refreshes.
+          */
+          function poll(){
+            setTimeout(refresh, 500);
+          };
+
+          /*
+             Update the DOM to reflect the system state encapsulated in JSON data.
+          */
+          function handleData(data) {
+            $('#uptime').html(data.uptime + ' mins');
+            $('#ten-min-avg').html(data.tenMinAvg.toFixed(2));
+            $('#ten-min-med').html(data.tenMinMed.toFixed(2));
+            $('#min-load').html(data.minLoad.toFixed(2));
+            $('#max-load').html(data.maxLoad.toFixed(2));
+
+            // Display Alert History
+            var a_list = $('ul#alert-list');
+            a_list.html('')
+            $.each(data.alertHistory, function(i) {
+              var alert_entry = data.alertHistory[i],
+                  alert_time  = prettyTime(alert_entry[0]),
+                  alert_high  = alert_entry[1],
+                  alert_avg   = alert_entry[2].toFixed(2),
+                  li = $('<li/>');
+
+              var time_stamp_html = '<span class="time-stamp">'
+                                    + alert_time + '</span>';
+
+              var alert_msg_html = '<span class="alert-msg';
+              if (alert_high) {
+                alert_msg_html += ' high"> High Load! ';
+              } else {
+                alert_msg_html += ' low"> Load Recovered! ';
+              }
+              alert_msg_html += '2-minute Load Average: ' + alert_avg;
+              alert_msg_html += '</span>'
+
+              li.append(time_stamp_html);
+              li.append(alert_msg_html);
+              li.appendTo(a_list);
+            });
+
+            drawBarGraph(data);
+          }
+
+          /*
+             Display the load history as a bar graph with D3.
+          */
+          function drawBarGraph(data) {
+            var history = [];
+            for (var i = 0; i < data.history.length; ++i) {
+              var sample_point = {
+                x: i * 10,                        // Seconds in the past
+                y: data.history[i][1],            // Load
+                t: prettyTime(data.history[i][0]) // System timestamp
+              }
+              history.push(sample_point);
+            }
+
+            var time_steps = [];
+            for (var i = 0; i < 600; i += 10) {
+              time_steps.push(i);
+            }
+
+            var margin = {top: 20, right: 30, bottom: 50, left: 30},
+                width  = 960 - margin.left - margin.right,
+                height = 500 - margin.top - margin.bottom;
+
+            var x = d3.scale.ordinal()
+                    .domain(time_steps)
+                    .rangeRoundBands([0, width], .1);
+
+            var y = d3.scale.linear()
+                    .domain([0, 3])
+                    .range([height, 0]);
+
+            var xAxis = d3.svg.axis()
+                        .scale(x)
+                        .orient('bottom')
+                        .tickValues([0, 60, 120, 180, 240, 300, 360, 420, 480, 540]);
+
+            var yAxis = d3.svg.axis()
+                        .scale(y)
+                        .orient('left');
+
+            var chart = d3.select('#bar-graph')
+                        .attr('width', width + margin.left + margin.right)
+                        .attr('height', height + margin.bottom + margin.top)
+                      .append('g')
+                        .attr('transform',
+                              'translate(' + margin.left + ',' + margin.top + ')');
+
+            // TODO: Why won't D3 let me user 'chart' variable here
+            d3.select('#bar-graph').selectAll('text').remove();
+            d3.select('#bar-graph').selectAll('rect').remove();
+
+            // Tooltips
+            var tip = d3.tip()
+                      .attr('class', 'd3-tip')
+                      .offset([-10, 0])
+                      .html(function(d) {
+                        return '<p><strong>Load: </strong>' + d.y.toFixed(3)
+                               + '</span><p><strong>Time: </strong>' + d.t;
+                      });
+            chart.call(tip);
+
+            // Load-Color interpolation: Green is good, Red is bad.
+            var cScale = d3.scale.linear()
+                         .domain([0.0, 0.5, 1.0, 2.5])
+                         .range(['#67E400','#67E400','#FF9C00', '#FF0D00']);
+
+            chart.selectAll('.bar').data(history).enter().append('rect')
+                 .attr('class', 'bar')
+                 .attr('x', function(d) { return x(d.x); })
+                 .attr('y', function(d) { return y(d.y); })
+                 .attr('height', function(d) { return height - y(d.y); })
+                 .attr('width', x.rangeBand())
+                 .style('fill', function(d) { return cScale(d.y); })
+                 .on('mouseover', tip.show)
+                 .on('mouseout', tip.hide);
+
+            chart.append('g')
+                 .attr('class', 'x axis')
+                 .attr('transform', 'translate(0,' + height + ')')
+                 .call(xAxis)
+               .append('text')
+                 .attr('y', 34)
+                 .attr('x', 43)
+                 .style('text-anchor', 'begining')
+                 .text('Seconds Ago');
+
+            chart.append('g')
+                 .attr('class', 'y axis')
+                 .call(yAxis)
+               .append('text')
+                 .attr('transform', 'rotate(-90)')
+                 .attr('y', 6)
+                 .attr('dy', '0.71em')
+                 .style('text-anchor', 'end')
+                 .text('CPU Load');
+          }
+
+          /*
+            Convert a time stamp in seconds-since-the-epoch to local
+             human-readable time string.
+          */
+          function prettyTime(t) {
+            d = new Date(t * 100);
+            return d.toLocaleTimeString();
+          }
+        </script>
+
+  </body>
+
+</html>

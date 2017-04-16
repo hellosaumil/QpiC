@@ -1,0 +1,479 @@
+$def with (form, text)
+
+<!doctype html>
+
+<html>
+
+    <head>
+        <title>Welcome to A Querying Platform on Cloud </title>
+        <!-- <link rel="stylesheet" type="text/css" href="/static/tutorial.css" /> -->
+
+        <script type="text/javascript" src="/static/jquery.js"></script>
+        <link rel="stylesheet" type="text/css" href="static/assets/css/main.css" />
+
+        <script type="text/javascript">
+
+          jQuery(document).ready(function()
+          {
+            console.log('ready!');
+
+            // xpath = '//*[@id="Candidate"]/table/tbody/tr[1]'
+            // document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.remove()
+            // xpath = '//*[@id="Candidate"]/table/tbody/tr[1]'
+            // document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.remove()
+            // xpath = '//*[@id="Candidate"]/table/tbody/tr[1]'
+            // document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.remove()
+            // xpath = '//*[@id="Candidate"]/table/tbody/tr[1]'
+            // document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.remove()
+            // xpath = '//*[@id="Candidate"]/table/tbody/tr[1]'
+            // document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.remove()
+
+            xpath = '//*[@id="form1"]/table/tbody/tr[3]'
+            document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.remove()
+            xpath = '//*[@id="form1"]/table/tbody/tr[3]'
+            document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.remove()
+            xpath = '//*[@id="form1"]/table/tbody/tr[3]'
+            document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.remove()
+            xpath = '//*[@id="form1"]/table/tbody/tr[3]'
+            // document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.remove()
+
+            xpath = '//*[@id="form2"]/table/tbody/tr[1]'
+            document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.remove()
+            xpath = '//*[@id="form2"]/table/tbody/tr[1]'
+            document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.remove()
+            xpath = '//*[@id="form2"]/table/tbody/tr[4]'
+            // document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.remove()
+
+            jQuery("#start").click(function()
+            {
+              jQuery('#one').hide().fadeIn(1000);
+              jQuery('#Company').hide().fadeIn(2000);
+              jQuery('footer').hide().fadeIn(1000);
+            });
+
+            jQuery("#Cp").click(function()
+            {
+              jQuery('#Company').hide().fadeIn(1000);
+            });
+
+            jQuery("#Cp2").click(function()
+            {
+              jQuery('#Company2').hide().fadeIn(1000);
+            });
+
+            jQuery("#Cd").click(function()
+            {
+              jQuery('#Candidate').hide().fadeIn(1000);
+            });
+
+            jQuery("#saveQuery1").click(function()
+            {
+              var username = $$('#tenant').text();
+              var file_name = $$('select#xtables option:selected').text();
+              var query = $$('textarea#qfield').val();
+
+              console.log('Form Saved!');
+              console.log('username')
+              console.log(username)
+              console.log('file_name')
+              console.log(file_name)
+              console.log('query')
+              console.log(query)
+
+              jQuery.ajax(
+                {
+                  type: "POST",
+                  data: {data_tx : '0'+'^'+username+'|'+file_name+'~'+query},
+
+                  success: function(datax)
+                  {
+                    var countx = JSON.parse(datax);
+                    // console.log(countx);
+                    // jQuery('#com').html(countx[0][0]).hide().fadeIn(10);
+                  },
+                });
+            return false;
+            });
+
+            jQuery("#loadQuery").click(function()
+              {
+
+                var res = window.location.href.split("Cloud/U");
+                var res2 = res[1].split(":");
+
+                console.log(res2[0]);
+                jQuery("textarea#qfield1").load("static/Cloud/"+res2[0]+"/q1.rq").hide().fadeIn(1000);
+                //
+                // jQuery.ajax(
+                //   {
+                //     url : "http://rcloud.cu.cc/uploads/check.txt",
+                //     dataType: "text",
+                //
+                //     success : function (data)
+                //     {
+                //       jQuery("textarea#qfield1").html(data).hide().fadeIn(1000);;
+                //     }
+                //   });
+                });
+
+            jQuery("#saveQuery2").click(function()
+            {
+              var username = $$('#tenant').text();
+              var file_name = $$('select#xtables1 option:selected').text();
+              var query = $$('textarea#qfield1').val();
+              var spq_file_name = $$('select#ytables option:selected').text();
+
+              console.log('Form Saved!');
+              console.log('username')
+              console.log(username)
+              console.log('file_name')
+              console.log(file_name)
+              console.log('query')
+              console.log(query)
+              console.log('spq_file_name')
+              console.log(spq_file_name)
+
+              jQuery.ajax(
+                {
+                  type: "POST",
+                  data: {data_tx : '0'+'^'+username+'|'+file_name+'~'+query},
+
+                  success: function(datax)
+                  {
+                    var countx = JSON.parse(datax);
+                    // console.log(countx);
+                    // jQuery('#com').html(countx[0][0]).hide().fadeIn(10);
+                  },
+                });
+              return false;
+              });
+
+              // jQuery("#saveQuery2").click(function()
+              // {
+              //   // $$(".text").load("/Users/hellosaumil/Desktop/ToDo/Cloud/4/users.txt");
+              //     var loc = window.location.pathname;
+              //     var dir = loc.substring(0, loc.lastIndexOf('/'));
+              //     console.log(loc);
+              //
+              //     $$(".text").load(loc+"/Cloud/4/users.txt");
+              // });
+
+            jQuery("#canRec").click(function()
+            {
+                    var username = $$('#tenant').text();
+                    var file_name = $$('select#xtables option:selected').text();
+                    var query = $$('textarea#qfield').val();
+
+                    console.log('\nRunning Query!');
+                    console.log('username')
+                    console.log(username)
+                    console.log('file_name')
+                    console.log(file_name)
+                    console.log('query')
+                    console.log(query)
+
+                    jQuery.ajax(
+                      {
+                        type: "POST",
+                        data: {data_tx : '1'+'^'+username+'|'+file_name+'~'+query},
+
+                        success: function(datax)
+                        {
+
+                          jQuery('#MainView').hide().fadeIn('slow');
+                          jQuery("#myTable1").empty();
+
+                          var countx = JSON.parse(datax);
+                          countxy = countx.split('\n');
+                          console.log(countxy);
+                          jQuery('#myTable1').append('<tr class="child"><td>'+'  '+'</td></tr><td>'+'  '+'</td></tr>').hide().fadeIn(1000);
+                          // jQuery('#myTable1').append('<tr><th>Rank</th><th>ID</th><th>Company Name</th><th>Job Title</th><th>Required Skills</th><th>Experience Required</th><th>Location</th></tr>')
+                          for (var i in countxy)
+                          {
+                            console.log(countx[i]);
+                            jQuery('#myTable1').append('<tr class="child"><td>'+countxy[i]+'</td></tr>').hide().fadeIn(1000);
+                          }
+
+                        },
+                      });
+              return false;
+            });
+
+            jQuery("#fileRec").click(function()
+            {
+              var username = $$('#tenant').text();
+              var file_name = $$('select#xtables1 option:selected').text();
+              var query = $$('textarea#qfield1').val();
+              var spq_file_name = $$('select#ytables option:selected').text();
+
+              console.log('Form Saved!');
+              console.log('username')
+              console.log(username)
+              console.log('file_name')
+              console.log(file_name)
+              console.log('query')
+              console.log(query)
+              console.log('spq_file_name')
+              console.log(spq_file_name)
+
+              jQuery.ajax(
+                {
+                  type: "POST",
+                  data: {data_tx : '1'+'^'+username+'|'+file_name+'~'+query},
+
+                  success: function(datax)
+                  {
+
+                    jQuery('#MainView').hide().fadeIn('slow');
+                    jQuery("#myTable2").empty();
+
+                    var countx = JSON.parse(datax);
+                    countxy = countx.split('\n');
+                    console.log(countxy);
+                    jQuery('#myTable2').append('<tr class="child"><td>'+'  '+'</td></tr><td>'+'  '+'</td></tr>').hide().fadeIn(1000);
+                    for (var i in countxy)
+                    {
+                      console.log(countx[i]);
+                      jQuery('#myTable2').append('<tr class="child"><td>'+countxy[i]+'</td></tr>').hide().fadeIn(1000);
+                    }
+
+                  },
+                    });
+              return false;
+            });
+
+          });
+
+        </script>
+    </head>
+
+    <style>
+          ul.tab {
+              list-style-type: none;
+              margin: 0;
+              padding: 0;
+              overflow: hidden;
+              border: 1px solid #ccc;
+              background-color: #f1f1f1;
+            }
+
+            /* Float the list items side by side */
+            ul.tab li {float: left;}
+
+            /* Style the links inside the list items */
+            ul.tab li a {
+                display: inline-block;
+                color: black;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                transition: 0.3s;
+                font-size: 17px;
+            }
+
+            /* Change background color of links on hover */
+            ul.tab li a:hover {
+                background-color: #5A4B78;
+                color: #00ffbb !important;
+                text-shadow: 0 2px 14px rgba(255,255,255, 0.7);
+            }
+
+            /* Create an active/current tablink class */
+            ul.tab li a:focus, .active {
+                background-color: #5A4B78;
+                color: #00ffbb !important;
+                text-shadow: 0 10px 14px rgba(0, 0, 0, 0.7);
+                font-weight: bold;
+            }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+
+        #one, #Company, #Candidate, footer {
+          display: none;
+          font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+        }
+
+        input#qfield {
+          height: 50px !important;
+        }
+
+        #xtables, #xtables1, #ytables{
+          border-radius: 10px;
+          width: auto;
+          font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+          font-size: 1.1em;
+        }
+
+        #myTable1 td,#myTable2 td{
+          word-spacing: 5px;
+          font-family: monospace;
+        }
+        #myTable1 th,#myTable2 th {
+          font-size: 1.4em;
+        }
+
+        label {
+          font-family: "Trebuchet MS", Helvetica, sans-serif;
+          color: grey;
+          font-size: 1.2em;
+        }
+
+        .wrapper {
+          margin-top: 10px;
+          margin-right: 3em;
+          margin-left: 3em;
+        }
+
+        #banner {
+          margin-top: -80px;
+        }
+
+        #bold{
+          color: white;
+        }
+
+    </style>
+
+    <body>
+
+      <!-- Banner -->
+			<section id="banner">
+				<div class="inner split">
+					<section>
+						<h2>Welcome to QpiC - A Querying Platform on Cloud<h2>
+
+              <span class="tenant1">
+                <h3 class="tenant2">Welcome, </h3><h4 class="tenant" id="tenant">$:text !</h4>
+                <br>
+              </span>
+
+              <h3>Cloud Platform Developed</h3>
+            <h4>
+              by <a href="http://axatchaudhary.github.io/">Axat <a href="http://hellosaumil.github.io/">Saumil</a>
+              <a href="http://mayankjobanputra.github.io/">Mayank </a> </a>
+
+            </h4>
+					</section>
+					<section>
+						<p> <strong id="bold">Qpic </strong>: A <strong id="bold">Q</strong>uerying <strong id="bold">P</strong>latform with VM <strong id="bold">I</strong>ntegeration on <strong id="bold">C</strong>loud
+               An online Querying Platform on Cloud with Live Migration Integrated.
+              Hit the button to Experience the Magic</p>
+						<ul class="actions">
+							<li><a id="start" href="#one" class="button special">Get Started</a></li>
+						</ul>
+						<ul class="actions">
+							<!-- <li><a id="start" href="#one" class="button special">Get Started</a></li> -->
+							<li>
+								<form id="form2" action="\logout" method="get">
+									<button id="start" type="submit" class="button special-logout">LogOut</button>
+								</form>
+
+							</li>
+
+						</ul>
+					</section>
+				</div>
+			</section>
+
+      <section id="one" class="wrapper">
+
+
+        <ul id="options" class="tab">
+          <li><a id ="Cp" href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Company')">Instant Query</a></li>
+          <li><a id ="Cp2" href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Company2')">Query with Sparql Files</a></li>
+          <li><a id ="Cd" href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Candidate')">Import Files</a></li>
+        </ul>
+
+        <div id="MainView">
+          <div id="Company" class="tabcontent">
+            <h3>Select Ontologies & Write Queries</h3>
+              <form id="form1" class="form" method="post" enctype="multipart/form-data">
+                    $:form.render()
+
+                <input id='saveQuery1' class="button special" type="button" value="Save Query"/>
+                <input id='canRec' class="button special" type="submit" value="Run Query"/>
+              </form>
+
+              <table id="myTable1" style="width:100%" hidden="hidden">
+                <tr>
+                  <th>Results to your Query</th>
+                </tr>
+              </table>
+          </div>
+
+          <div id="Company2" class="tabcontent">
+            <h3>Select Ontologies, SPARQLs & Run Queries</h3>
+              <form id="form2" class="form" method="post" enctype="multipart/form-data">
+                    $:form.render()
+
+                <input id='loadQuery' class="button special" type="button" value="Load Query"/>
+                <input id='saveQuery2' class="button special" type="button" value="Save Query"/>
+                <input id='fileRec' class="button special" type="submit" value="Run Query"/>
+                <br><br>
+              <table id="myTable2" style="width:100%" hidden="hidden">
+                <tr>
+                  <th>Results to your Query</th>
+                </tr>
+              </table>
+          </div>
+
+          <div id="Candidate" class="tabcontent">
+            <h3>Import an Ontology</h3>
+            <form id="form3" method="POST" enctype="multipart/form-data" action="">
+              <table>
+                <tr>
+                  <td>
+                    <label>Choose a file to Upload : </label>
+                </td>
+                <td>
+                  <input type="file" name="myfile" />
+                  <!-- <input id='comRec' class="button special" type="submit" value="Upload"/> -->
+                  <input id='comRec' class="button special" type="submit" value="Upload"/>
+
+                </td>
+                </tr>
+              </table>
+
+            </form>
+
+          </div>
+
+        </div>
+      </section>
+
+        <footer id="footer">
+  				<div class="copyright">
+            _____________________________________________________________________________________________________________
+            <br>
+            This was developed at
+            <a class="credits" href="http://seas.ahduni.edu.in/"> School of Engineering &amp; Applied Science, Ahmedabad University</a> during the year 2016 <br>by Saumil Shah (131044), Axat Chaudhary (131006) &amp; Mayank Jobanputra (131026).
+            <br>
+            <br>
+            Website Developed By: <a class="cntb" href="http://hellosaumil.github.io/">Saumil Shah</a> Copyright © 2016 hellosaumil. All rights reserved.
+
+          </div>
+        </footer>
+<script>
+  function openCity(evt, cityName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+</script>
+    </body>
+
+</html>

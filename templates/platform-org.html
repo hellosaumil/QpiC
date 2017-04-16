@@ -1,0 +1,318 @@
+$def with (form, text, names)
+
+<!doctype html>
+
+<html>
+
+    <head>
+        <title>Welcome to Automated Matchmaking System on Cloud </title>
+        <!-- <link rel="stylesheet" type="text/css" href="/static/tutorial.css" /> -->
+
+        <script type="text/javascript" src="/static/jquery.js"></script>
+        <link rel="stylesheet" type="text/css" href="static/assets/css/main.css" />
+
+        <script type="text/javascript">
+
+          jQuery(document).ready(function()
+          {
+            console.log('ready!');
+
+              xpath = '//*[@id="Company"]/form/table/tbody/tr[5]'
+              document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.remove()
+              xpath = '//*[@id="Company"]/form/table/tbody/tr[6]'
+              document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.remove()
+              xpath = '//*[@id="Company"]/form/table/tbody/tr[7]'
+              document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.remove()
+              xpath = '//*[@id="Company"]/form/table/tbody/tr[5]'
+              document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.remove()
+              xpath = '//*[@id="Company"]/form/table/tbody/tr[5]'
+              document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.remove()
+
+              xpath = '//*[@id="Candidate"]/form/table/tbody/tr[1]'
+              document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.remove()
+              xpath = '//*[@id="Candidate"]/form/table/tbody/tr[1]'
+              document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.remove()
+              xpath = '//*[@id="Candidate"]/form/table/tbody/tr[1]'
+              document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.remove()
+              xpath = '//*[@id="Candidate"]/form/table/tbody/tr[1]'
+              document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.remove()
+
+            // xpath = '//*[@id="Company"]/form/table/tbody/tr[1]'
+            // document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.remove()
+
+            jQuery("#start").click(function()
+            {
+              jQuery('#one').hide().fadeIn(1000);
+              jQuery('#Company').hide().fadeIn(2000);
+              jQuery('footer').hide().fadeIn(1000);
+            });
+
+            jQuery("#Cp").click(function()
+            {
+              jQuery('#Company').hide().fadeIn(1000);
+            });
+
+            jQuery("#Cd").click(function()
+            {
+              jQuery('#Candidate').hide().fadeIn(1000);
+            });
+
+            jQuery("#canRec").click(function()
+            {
+                    var input_string1 = $$("input#textfield1").val();
+                    var input_string2 = $$("input#textfield2").val();
+                    var input_string3 = $$("input#textfield3").val();
+                    var input_string4 = $$("input#textfield4").val();
+
+                    var input_string5 = $$('select#xtables option:selected').text();
+
+                    console.log(input_string5)
+                    jQuery.ajax(
+                      {
+                        type: "POST",
+                        data: {textfield : input_string1+':'+input_string2+'@'+input_string3+'^'+input_string4+'%'+'1'+'!'+input_string5},
+                        success: function(datax)
+                        {
+                          // jQuery('#foo').html(data).hide().fadeIn(1500);
+                          var countx = JSON.parse(datax);
+                          console.log(countx);
+                          jQuery('#com').html(countx[0][0]).hide().fadeIn(10);
+                          jQuery('#myTable1').append('<tr class="child"><td>'+countx+'</td></tr>' ).hide().fadeIn(1000);
+                          // for (var i in countx)
+                          // {
+                          //   // console.log(countx[i]);
+                          //   jQuery('#com').html(countx[i][0]).hide().fadeIn(10);
+                          //   jQuery('#myTable1').append('<tr class="child"><td>'+countx[i][7]+'</td><td>'+countx[i][6]+'</td><td>'+countx[i][0]+'</td><td>'+JSON.stringify(countx[i][1])+'</td><td>'+countx[i][2]+'</td><td>'+countx[i][3]+'</td><td>'+countx[i][4]+'</td><td>'+ countx[i][5]+'</td><td>'+ countx[i][8] + '</td></tr>' ).hide().fadeIn(1000);
+                          // }
+                          // jQuery('#foo').html(datax).hide().fadeIn(1500);
+                        },
+                      });
+              return false;
+              });
+
+              jQuery("#comRec").click(function()
+              {
+                      var input_string1 = $$("input#tfield1").val();
+                      var input_string2 = $$("input#tfield2").val();
+                      var input_string3 = $$("input#tfield3").val();
+                      var input_string4 = $$("input#tfield4").val();
+                      var input_string5 = $$("input#tfield5").val();
+                      jQuery.ajax(
+                        {
+                          type: "POST",
+                          data: {tfield : input_string1+':'+input_string2+'@'+input_string3+'^'+input_string4+'#'+input_string5+'%'+'2'},
+
+                          success: function(dataxy)
+                          {
+                            // jQuery('#foo').html(data).hide().fadeIn(1500);
+                            var countxy = JSON.parse(dataxy);
+                            console.log(countxy);
+
+                            for (var i in countxy)
+                            {
+                              console.log(countxy[i]);
+                              jQuery('#cand').html(countxy[i][0]).hide().fadeIn(10);
+                              jQuery('#myTable2').append('<tr class="child"><td>'+countxy[i][3]+'</td><td>'+countxy[i][4]+'</td><td>'+countxy[i][0]+'</td><td>'+JSON.stringify(countxy[i][1])+'</td><td>'+countxy[i][2]+'</td></tr>').hide().fadeIn(1000);
+                            }
+                            jQuery('#foo').html(dataxy).hide().fadeIn(1500);
+                          },
+                        });
+                return false;
+                });
+
+          });
+
+        </script>
+    </head>
+
+    <style>
+        /*body {font-family: "Lato", sans-serif;}*/
+
+        ul.tab {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+
+        /* Float the list items side by side */
+        ul.tab li {float: left;}
+
+        /* Style the links inside the list items */
+        ul.tab li a {
+            display: inline-block;
+            color: black;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 17px;
+        }
+
+        /* Change background color of links on hover */
+        ul.tab li a:hover {
+            background-color: #ddd;
+        }
+
+        /* Create an active/current tablink class */
+        ul.tab li a:focus, .active {
+            background-color: #ccc;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+
+        #one, #Company, #Candidate, footer {
+          display: none;
+        }
+
+        .wrapper {
+          margin-top: 10px;
+          margin-right: 3em;
+          margin-left: 3em;
+        }
+
+    </style>
+
+    <body>
+
+      <!-- Banner -->
+			<section id="banner">
+				<div class="inner split">
+					<section>
+						<h2>Welcome to A Querying Platform on Cloud<h2>
+
+              <span class="tenant1">
+                <h3 class="tenant2">Welcome, </h3><h4 class="tenant">$:text !</h4>
+                <br>
+              </span>
+
+              <h3>Cloud Platform Developed</h3>
+            <h4><a href="http://hellosaumil.github.io/SEAS-FR">by Axat Saumil Mayank </a></h4>
+					</section>
+					<section>
+						<p>An automated match-making platform serving both Job Hunting
+              & Job Hiring Process. Hit the button to Experience the Magic</p>
+						<ul class="actions">
+							<li><a id="start" href="#one" class="button special">Get Started</a></li>
+						</ul>
+						<ul class="actions">
+							<!-- <li><a id="start" href="#one" class="button special">Get Started</a></li> -->
+							<li>
+								<form id="form2" action="\logout" method="get">
+									<button id="start" type="submit" class="button special-logout">LogOut</button>
+								</form>
+
+							</li>
+
+						</ul>
+					</section>
+				</div>
+			</section>
+
+      <section id="one" class="wrapper">
+
+
+        <ul id="options" class="tab">
+          <li><a id ="Cp" href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Company')">For Institutions</a></li>
+          <li><a id ="Cd" href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Candidate')">For Professionals</a></li>
+        </ul>
+
+        <div id="MainView">
+          <div id="Company" class="tabcontent">
+            <h3>Select Ontologies</h3>
+
+            <form>
+                <select id="tablex" name="tablex", onchange="ajax(\"{{=URL('change_dropdown')}}\",['tablex'],':eval') ;">
+                    <option value="first_value">first</option>
+                    <option value="second_value">second</option>
+                    <option value="third_value">third</option>
+                    $for todo in names  :
+                      <option value="third_value">$todo</option>
+                    </select>
+            </form>
+
+              <p>Write Your Query</p>
+              <form id="form1" class="form" method="post">
+                    $:form.render()
+                <input id='canRec' class="button special" type="submit" value="Run Query"/>
+              </form>
+
+              <table id="myTable1" style="width:100%" hidden="hidden">
+                <tr>
+                  <th>SR</th>
+                  <th>WRank</th>
+        				  <th>Distance</th>
+                  <th>Name</th>
+                  <th>Skills</th>
+                  <th>Exp</th>
+                  <th>Degree</th>
+                  <th>Institution</th>
+                  <th>UniRank</th>
+                </tr>
+              </table>
+          </div>
+
+          <div id="Candidate" class="tabcontent">
+            <h3>Let's find Companies...</h3>
+            <p>Enter Your Profile Details</p>
+
+            <form id="form2" class="form" method="post">
+            $:form.render()
+            <input id='comRec' class="button special" type="submit" value="Recommend Jobs"/>
+            </form>
+
+            <table id="myTable2" style="width:100%" hidden="hidden">
+              <tr>
+                <th>SR</th>
+                <th>Distance</th>
+                <th>Job Title</th>
+                <th>Required Skills</th>
+                <th>Experience Required</th>
+                <!-- <th>Company Name</th> -->
+
+              </tr>
+            </table>
+
+          </div>
+
+        </div>
+      </section>
+
+        <footer id="footer">
+  				<div class="copyright">
+            _____________________________________________________________________________________________________________
+            <br>
+            This was developed at
+            <a class="credits" href="http://seas.ahduni.edu.in/"> School of Engineering &amp; Applied Science, Ahmedabad University</a> during the year 2016 <br>by Saumil Shah (131044), Axat Chaudhary (131006) &amp; Mayank Jobanputra (131026).
+            <br>
+            <br>
+            Website Developed By: <a class="cntb" href="http://hellosaumil.github.io/">Saumil Shah</a> Copyright © 2016 hellosaumil. All rights reserved.
+
+          </div>
+        </footer>
+<script>
+function openCity(evt, cityName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+</script>
+    </body>
+
+</html>

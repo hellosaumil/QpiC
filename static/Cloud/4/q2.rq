@@ -1,0 +1,10 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+#PREFIX : <http://www.semanticweb.org/axat/ontologies/2016/9/skill#>
+PREFIX : <http://www.semanticweb.org/axat/ontologies/2016/9/untitled-ontology-37#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+select * where {
+  ?class a owl:Class; rdfs:subClassOf ?superclass .
+  FILTER ( ?superclass in (:android,:java, :spring,:spring-mvc,:hibernate) && ?superclass != ?class)
+  FILTER ( ?class in (:android,:java, :spring,:spring-mvc,:hibernate) )
+}

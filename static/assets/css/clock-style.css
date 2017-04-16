@@ -1,0 +1,145 @@
+body{
+    text-align: center;
+    /*background: #00ECB9;*/
+    background: whitesmoke;
+  font-family: sans-serif;
+  font-weight: 100;
+}
+
+h1{
+  /*color: #376;*/
+  color: darkgray;
+  font-weight: 100;
+  font-size: 4em;
+  margin: 40px 0px 20px;
+}
+
+#clockdiv{
+    font-family: "Lucida Grande", sans-serif;
+    color: #fff;
+    display: inline-block;
+    font-weight: 100;
+    text-align: center;
+    font-size: 2.5em;
+    padding: 10px;
+    /*width: 10em;*/
+}
+
+
+input{
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    color: dimgrey;
+    background: #EEEEEE;
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.4px;
+
+    border: 2px solid dimgrey;
+    border-radius: 3px;
+
+    margin-left: 10px;
+    transition: none 300ms ease-out;
+    transition-property: all;
+}
+
+#clockdiv > div{
+    font-size: 0.5em;
+    letter-spacing: 1.5px;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    border-radius: 4px;
+    background: dimgray;
+    display: inline-block;
+    padding-bottom: none;
+}
+
+#clockdiv div > span{
+    padding-top: 15px;
+    border-radius: 3px;
+    background: gray;
+    display: block;
+    padding-right: 2em;
+    padding-left: 2em;
+    padding-bottom: 2em;
+}
+.smalltext{
+    font-size: 16px;
+    color: lightgray;
+}
+
+#form1 {
+  height: 200px;
+  width: 324px;
+  margin-top: 10px;
+  display:block;
+  /*margin-bottom: -20px;*/
+}
+
+#pwd{
+  margin-bottom: -20px;
+}
+
+#New{
+  display: block;
+}
+
+#form2 {
+  height: 80px;
+  margin-top: -10px;
+  display:block;
+  margin-bottom: 10px;
+}
+
+.start, .stop{
+  font-family: "Lucida Grande", sans-serif;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.8em;
+
+  /*border: 2px solid #00816A;*/
+  padding: 0.8em 6vw;
+  border-radius: 1.2em;
+  display: inline-block;
+  padding: none !important;
+  /*background:  #00ECB9;*/
+  color: gray;
+
+  letter-spacing: 1px;
+  text-decoration: none;
+  transition: none 300ms ease-out;
+  transition-property: all;
+}
+.stop{
+  /*color: #F94932;*/
+  font-weight: normal;
+  color: darkgray;
+}
+
+button{
+  border: none;
+  margin: none;
+  padding: -10px;
+  background: none;
+}
+.start{
+  color: lightgray;
+}
+
+.start:hover{
+    background: #00BF96;
+    color: whitesmoke;
+}
+
+.stop:hover{
+  /*background: #F94932;
+  color: white;*/
+
+  background: tomato;
+  color: lightgray;
+}
+
+input:focus{
+    border-color: #00BF96;
+    border-width: 2px;
+}
